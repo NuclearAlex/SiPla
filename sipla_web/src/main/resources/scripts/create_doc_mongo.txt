@@ -1,0 +1,31 @@
+db.createCollection("questions_mongo");
+db.createCollection("topics_mongo");
+db.createCollection("rounds_mongo");
+
+
+db.dropDatabase("questions_mongo");
+db.dropDatabase("topics_mongo");
+db.dropDatabase("rounds_mongo");
+
+
+db.questions_mongo.insertOne(
+    {
+        "id": "1",
+        "topic_id": "1",
+        "answer_time": 10,
+        "nominal": 10,
+        "text": "В каком году произошло восстание декабристов?",
+        "answer": "1825",
+        "additional_answer": "декабрь 1825",
+        "source": "Википедия"
+    }
+);
+
+
+db.rounds_mongo.insertOne(
+    {
+        "id": "1",
+        "round_name": "round 1",
+        "round_time": 10800
+    }
+);

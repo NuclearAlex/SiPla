@@ -1,0 +1,46 @@
+server:
+  port: 8055
+  servlet:
+    context-path: /data
+
+logging:
+  level:
+    sql: debug
+debug: true
+
+#==============================================================================
+#                               DB profile
+#==============================================================================
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/siplatdb
+    username: user
+    password: pass
+    driver-class-name: org.postgresql.Driver
+  second-datasource:
+    url: 127.0.0.0:27017
+    username: mongoadmin
+    password: secret
+  main:
+    allow-bean-definition-overriding: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: -1
+      max-request-size: -1
+
+#==============================================================================
+#                                   Swagger
+#==============================================================================
+      # local url (custom) - http://localhost:8055/data/swagger-ui/index.html#
+      # local url (standard) - http://localhost:8080/swagger-ui/index.html#
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true
