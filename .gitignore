@@ -1,0 +1,6 @@
+.idea
+console_app/target
+domain/target
+sipla_web/out
+
+*.iml
