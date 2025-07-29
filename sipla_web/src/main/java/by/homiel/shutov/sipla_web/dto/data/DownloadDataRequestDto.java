@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * DTO для запроса выгрузки данных из БД в требуемом формате
  */
 @Builder
-public record DownloadDataRequestDto(String fileName, FileType fileType, boolean includeAnime) {
+public record DownloadDataRequestDto(String fileName, FileType fileType, boolean mongo, boolean postgre) {
     public String getFileName() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

@@ -2,8 +2,10 @@ package by.homiel.shutov.sipla_web.service.metadata;
 
 import by.homiel.shutov.sipla_web.config.ConfigDb;
 import by.homiel.shutov.sipla_web.repository.util.Table;
+import com.mongodb.client.MongoCollection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -31,12 +33,11 @@ public class MetadataExtractor {
 
     private final ConfigDb configDbConnection;
 
-    public Map<String, List<String>> getMetaDataMongo() {
-//        ListCollectionsIterable<Document> questions = configDbConnection
-//                .getMongodbClient()
-//                .getDatabase("questions")
-//                .listCollections();
-        return null;
+    public MongoCollection<Document> getMetaDataMongo() {
+        return configDbConnection
+                .getMongodbClient()
+                .getDatabase("siplatdb")
+                .getCollection("questions_mongo");
     }
 
     public Map<String, List<String>> getMetaDataPg() {

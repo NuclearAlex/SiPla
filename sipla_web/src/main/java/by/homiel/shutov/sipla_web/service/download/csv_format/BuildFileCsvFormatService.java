@@ -4,8 +4,11 @@ import by.homiel.shutov.sipla_web.dto.data.DownloadDataRequestDto;
 import by.homiel.shutov.sipla_web.repository.util.FileDataService;
 import by.homiel.shutov.sipla_web.service.download.BuildFileService;
 import by.homiel.shutov.sipla_web.service.metadata.MetadataExtractor;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -39,11 +42,37 @@ public class BuildFileCsvFormatService implements BuildFileService {
                 .getBytes());
 
         try (outputStream) {
-            Map<String, List<String>> allTables = metadataExtractor.getMetaDataPg();
-            allTables.forEach((tableName, fields) ->
-                    // write table data
-                    writeTableData(outputStream, metadataExtractor, tableName, fileDataService, fields.size()));
+            if (downloadDataRequestDto.postgre()) {
+                Map<String, List<String>> allTables = metadataExtractor.getMetaDataPg();
+                allTables.forEach((tableName, fields) ->
+                        // write table data
+                        writeTableData(outputStream, metadataExtractor, tableName, fileDataService, fields.size()));
+            }
+
+            if (downloadDataRequestDto.postgre() && downloadDataRequestDto.mongo()) {
+                outputStream.write("//////////////////////////////////////////////////////////////////////\n".getBytes());
+                outputStream.write(("""
+                        \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                        \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+                        """).getBytes());
+            }
+
+            if (downloadDataRequestDto.mongo()) {
+                MongoCollection<Document> metaDataMongo = metadataExtractor.getMetaDataMongo();
+                FindIterable<Document> documents = metaDataMongo.find();
+
+                for (Document document : documents) {
+                    if (!Objects.isNull(document)) {
+                        // write data
+                        //TODO: привести в удобочитаемый вид - отработать с монгосервисом
+                        outputStream.write(Objects.requireNonNullElse(document.toJson(), NULL).getBytes());
+                        outputStream.write("\n".getBytes());
+                    }
+                }
+            }
         }
+
         return outputStream;
     }
 

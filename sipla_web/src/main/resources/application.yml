@@ -18,15 +18,12 @@ spring:
     password: pass
     driver-class-name: org.postgresql.Driver
   second-datasource:
-    url: 127.0.0.0:27017
+    prefix: mongodb://
+    url: 127.0.0.1:27017
     username: mongoadmin
     password: secret
   main:
     allow-bean-definition-overriding: true
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
   servlet:
     multipart:
       max-file-size: -1
@@ -44,3 +41,5 @@ springdoc:
   swagger-ui:
     path: /swagger-ui
     enabled: true
+
+separator: ""

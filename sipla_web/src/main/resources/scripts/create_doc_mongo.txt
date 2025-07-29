@@ -1,3 +1,5 @@
+use siplatdb
+
 db.createCollection("questions_mongo");
 db.createCollection("topics_mongo");
 db.createCollection("rounds_mongo");
@@ -8,8 +10,8 @@ db.dropDatabase("topics_mongo");
 db.dropDatabase("rounds_mongo");
 
 
-db.questions_mongo.insertOne(
-    {
+db.questions_mongo.insertMany(
+    [{
         "id": "1",
         "topic_id": "1",
         "answer_time": 10,
@@ -18,14 +20,62 @@ db.questions_mongo.insertOne(
         "answer": "1825",
         "additional_answer": "декабрь 1825",
         "source": "Википедия"
-    }
+    },
+    {
+        "id": "2",
+        "topic_id": "1",
+        "answer_time": 10,
+        "nominal": 20,
+        "text": "В каком году произошла первая революция?",
+        "answer": "1566",
+        "additional_answer": "1566-1609",
+        "source": "Википедия"
+    },
+    {
+        "id": "3",
+        "topic_id": "1",
+        "answer_time": 10,
+        "nominal": 30,
+        "text": "Как зовут китайского Горбачева?",
+        "answer": "Дэн Сяопин",
+        "additional_answer": "точный ответ",
+        "source": "Википедия"
+    },
+    {
+        "id": "4",
+        "topic_id": "1",
+        "answer_time": 10,
+        "nominal": 40,
+        "text": "Кто убил Троцкого?",
+        "answer": "Рамон Меркадер",
+        "additional_answer": null,
+        "source": "Википедия"
+    },
+    {
+        "id": "5",
+        "topic_id": "1",
+        "answer_time": 10,
+        "nominal": 50,
+        "text": "Автор романа \"Одномерный человек\"?",
+        "answer": "Герберт Маркузе",
+        "additional_answer": "Тот самый немецкий философ середины 20 века из Франкфуртской школы",
+        "source": "Википедия"
+    }]
 );
 
 
 db.rounds_mongo.insertOne(
     {
         "id": "1",
-        "round_name": "round 1",
+        "round_name": "Раунд 1",
         "round_time": 10800
+    }
+);
+
+db.topics_mongo.insertOne(
+    {
+        "id": "1",
+        "round_id": "1",
+        "topic_name": "Всемирная история"
     }
 );

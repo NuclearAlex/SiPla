@@ -14,8 +14,8 @@ import java.sql.SQLException;
 
 @Configuration
 public class ConfigDb {
-    public final String separator = "";
-
+    @Value("${separator}")
+    public String separator;
     @Value("${spring.datasource.url}")
     private String postUrl;
     @Value("${spring.datasource.username}")
@@ -25,6 +25,8 @@ public class ConfigDb {
     @Value("${spring.datasource.driver-class-name}")
     private String postDriver;
 
+    @Value("${spring.second-datasource.prefix}")
+    private String prefix;
     @Value("${spring.second-datasource.url}")
     private String mongoUrl;
     @Value("${spring.second-datasource.username}")
@@ -51,9 +53,10 @@ public class ConfigDb {
     @ConfigurationProperties(prefix = "spring.second-datasource")
     public MongoClient getMongodbClient() {
         String connectionString =
-                "mongodb://" + mongoUser +
-                        ":" + mongoPassword +
-                        "@" + mongoUrl;
+                prefix +
+                mongoUser + ":" +
+                mongoPassword + "@" +
+                mongoUrl;
         return MongoClients.create(connectionString);
     }
 }
