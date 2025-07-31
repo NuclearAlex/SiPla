@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Primary;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.MONGO_PREFIX;
+
 @Configuration
 public class ConfigDb {
     @Value("${separator}")
@@ -25,13 +27,11 @@ public class ConfigDb {
     @Value("${spring.datasource.driver-class-name}")
     private String postDriver;
 
-    @Value("${spring.second-datasource.prefix}")
-    private String prefix;
-    @Value("${spring.second-datasource.url}")
+    @Value("${spring.data.mongodb.host}")
     private String mongoUrl;
-    @Value("${spring.second-datasource.username}")
+    @Value("${spring.data.mongodb.username}")
     private String mongoUser;
-    @Value("${spring.second-datasource.password}")
+    @Value("${spring.data.mongodb.password}")
     private String mongoPassword;
 
 
@@ -50,13 +50,9 @@ public class ConfigDb {
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.second-datasource")
+    @ConfigurationProperties(prefix = "spring.data.mongodb")
     public MongoClient getMongodbClient() {
-        String connectionString =
-                prefix +
-                mongoUser + ":" +
-                mongoPassword + "@" +
-                mongoUrl;
+        String connectionString = String.format("%s%s:%s@%s", MONGO_PREFIX, mongoUser, mongoPassword, mongoUrl);
         return MongoClients.create(connectionString);
     }
 }

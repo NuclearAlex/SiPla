@@ -12,16 +12,18 @@ debug: true
 #                               DB profile
 #==============================================================================
 spring:
+  data:
+    mongodb:
+      host: 127.0.0.1:27017
+      username: mongoadmin
+      password: secret
+      database: siplatdb
+      authentication-database: admin
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/siplatdb
     username: user
     password: pass
     driver-class-name: org.postgresql.Driver
-  second-datasource:
-    prefix: mongodb://
-    url: 127.0.0.1:27017
-    username: mongoadmin
-    password: secret
   main:
     allow-bean-definition-overriding: true
   servlet:

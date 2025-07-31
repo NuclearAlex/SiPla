@@ -23,13 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.INVALID_FILE;
+
 @RestController
 @RequestMapping(value = "/api/v1/data")
 @RequiredArgsConstructor
 @Tag(name = "SiPla Controller", description = "Controller for requests")
 public class WorkController implements WorkControllerDocumentation {
-
-    public static final String INVALID_FILE = "You must choose any file!";
 
     private final WorkService workService;
 

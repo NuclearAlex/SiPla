@@ -10,16 +10,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.DESCRIPTION;
+import static by.homiel.shutov.sipla_web.utils.Constants.TITLE;
+
 @Configuration
 @SecurityScheme(name = "sipla",
         type = SecuritySchemeType.APIKEY, bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER, paramName = "Authorization")
 public class SwaggerConfig {
-
-    private static final String TITLE = "\"Si Platform\" by Nuclearalex & Shavadre";
-    private static final String DESCRIPTION =
-            "Платформа для загрузки и скачивания пакетов и тем своей игры. Все права защищены ©";
-
     @Bean
     public OpenAPI customOpenAPI(@Value("${server.servlet.context-path}") String contextPath) {
         return new OpenAPI()

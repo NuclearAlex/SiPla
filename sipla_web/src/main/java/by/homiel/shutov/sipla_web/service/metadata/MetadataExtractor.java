@@ -19,6 +19,12 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.MONGO_COLLECTION;
+import static by.homiel.shutov.sipla_web.utils.Constants.MONGO_DB;
+import static by.homiel.shutov.sipla_web.utils.Constants.POSTGRES_COLUMN_NAME;
+import static by.homiel.shutov.sipla_web.utils.Constants.POSTGRES_PUBLIC_SCHEMA;
+import static by.homiel.shutov.sipla_web.utils.Constants.POSTGRES_TABLE_NAME;
+
 /**
  * * If a new schema with tables will add to database you need to add these tables into metaDataTableNames value!
  **/
@@ -27,17 +33,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 @AllArgsConstructor
 public class MetadataExtractor {
-    private static final String PUBLIC_SCHEMA = "public";
-    private static final String TABLE_NAME = "TABLE_NAME";
-    private static final String COLUMN_NAME = "COLUMN_NAME";
 
     private final ConfigDb configDbConnection;
 
     public MongoCollection<Document> getMetaDataMongo() {
         return configDbConnection
                 .getMongodbClient()
-                .getDatabase("siplatdb")
-                .getCollection("questions_mongo");
+                .getDatabase(MONGO_DB)
+                .getCollection(MONGO_COLLECTION);
     }
 
     public Map<String, List<String>> getMetaDataPg() {
@@ -46,7 +49,7 @@ public class MetadataExtractor {
 
         try (Connection conn = configDbConnection.getPostgresqlConnection()) {
             DatabaseMetaData md = conn.getMetaData();
-            ResultSet tablesPublic = md.getTables(null, PUBLIC_SCHEMA, null, null);
+            ResultSet tablesPublic = md.getTables(null, POSTGRES_PUBLIC_SCHEMA, null, null);
             addDataToList(tablesPublic, metaData);
 
             // excluding unused tables and checking ignore list
@@ -84,10 +87,10 @@ public class MetadataExtractor {
                 rs = md.getColumns(null, null, tableName, null);
 
                 while (rs.next()) {
-                    if (temp.contains(rs.getString(COLUMN_NAME))) {
+                    if (temp.contains(rs.getString(POSTGRES_COLUMN_NAME))) {
                         continue;
                     }
-                    temp.add(rs.getString(COLUMN_NAME));
+                    temp.add(rs.getString(POSTGRES_COLUMN_NAME));
                 }
                 result.put(tableName, temp);
             } catch (SQLException e) {
@@ -102,7 +105,7 @@ public class MetadataExtractor {
 
     private void addDataToList(ResultSet rs, CopyOnWriteArrayList<String> metaData) throws SQLException {
         while (rs.next()) {
-            metaData.add(rs.getString(TABLE_NAME));
+            metaData.add(rs.getString(POSTGRES_TABLE_NAME));
         }
     }
 }

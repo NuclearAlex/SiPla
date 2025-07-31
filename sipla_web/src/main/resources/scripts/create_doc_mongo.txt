@@ -1,81 +1,93 @@
 use siplatdb
 
-db.createCollection("questions_mongo");
-db.createCollection("topics_mongo");
-db.createCollection("rounds_mongo");
+db.createCollection("siplat_collection");
 
-
-db.dropDatabase("questions_mongo");
-db.dropDatabase("topics_mongo");
-db.dropDatabase("rounds_mongo");
-
-
-db.questions_mongo.insertMany(
+db.siplat_collection.insertMany(
     [{
         "id": "1",
-        "topic_id": "1",
-        "answer_time": 10,
-        "nominal": 10,
-        "text": "В каком году произошло восстание декабристов?",
-        "answer": "1825",
-        "additional_answer": "декабрь 1825",
-        "source": "Википедия"
-    },
-    {
-        "id": "2",
-        "topic_id": "1",
-        "answer_time": 10,
-        "nominal": 20,
-        "text": "В каком году произошла первая революция?",
-        "answer": "1566",
-        "additional_answer": "1566-1609",
-        "source": "Википедия"
-    },
-    {
-        "id": "3",
-        "topic_id": "1",
-        "answer_time": 10,
-        "nominal": 30,
-        "text": "Как зовут китайского Горбачева?",
-        "answer": "Дэн Сяопин",
-        "additional_answer": "точный ответ",
-        "source": "Википедия"
-    },
-    {
-        "id": "4",
-        "topic_id": "1",
-        "answer_time": 10,
-        "nominal": 40,
-        "text": "Кто убил Троцкого?",
-        "answer": "Рамон Меркадер",
-        "additional_answer": null,
-        "source": "Википедия"
-    },
-    {
-        "id": "5",
-        "topic_id": "1",
-        "answer_time": 10,
-        "nominal": 50,
-        "text": "Автор романа \"Одномерный человек\"?",
-        "answer": "Герберт Маркузе",
-        "additional_answer": "Тот самый немецкий философ середины 20 века из Франкфуртской школы",
-        "source": "Википедия"
-    }]
-);
-
-
-db.rounds_mongo.insertOne(
-    {
-        "id": "1",
         "round_name": "Раунд 1",
-        "round_time": 10800
-    }
-);
-
-db.topics_mongo.insertOne(
-    {
-        "id": "1",
-        "round_id": "1",
-        "topic_name": "Всемирная история"
-    }
+        "round_time": 10800,
+        "topics": [
+            {
+                "topic_name": "Всемирная история",
+                "questions": [
+                    {
+                        "nominal": 10,
+                        "text": "В каком году произошло восстание декабристов?",
+                        "answer": "1825",
+                        "additional_answer": "декабрь 1825",
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 20,
+                        "text": "В каком году произошла первая революция?",
+                        "answer": "1566",
+                        "additional_answer": "1566-1609",
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 30,
+                        "text": "Как зовут китайского Горбачева?",
+                        "answer": "Дэн Сяопин",
+                        "additional_answer": "точный ответ",
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 40,
+                        "text": "Кто убил Троцкого?",
+                        "answer": "Рамон Меркадер",
+                        "additional_answer": null,
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 50,
+                        "text": "Автор романа \"Одномерный человек\"?",
+                        "answer": "Герберт Маркузе",
+                        "additional_answer": "Тот самый немецкий философ середины 20 века из Франкфуртской школы",
+                        "source": "Википедия"
+                    }
+                ]
+            },
+            {
+                "topic_name": "Математика",
+                "questions": [
+                    {
+                        "nominal": 10,
+                        "text": "Назовите минимальное натуральное число",
+                        "answer": "1",
+                        "additional_answer": "точный ответ",
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 20,
+                        "text": "Что такое иррациональные числа",
+                        "answer": "Множество R",
+                        "additional_answer": "R",
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 30,
+                        "text": "Что это за последовательность: 1, 1, 2, 3, 5, 8, 13, 21?",
+                        "answer": "Фибоначчи",
+                        "additional_answer": null,
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 40,
+                        "text": "Что такое матрица?",
+                        "answer": "Прямоугольная таблица чисел, организованных в строки и столбцы",
+                        "additional_answer": "Фильм братьев Вачовски",
+                        "source": "Википедия"
+                    },
+                    {
+                        "nominal": 50,
+                        "text": "Соберите анаграмму: Ноарк",
+                        "answer": "Карно",
+                        "additional_answer": "Чел, который основал термодинамику",
+                        "source": "Википедия"
+                    }
+                ]
+            }
+        ]
+    }]
 );

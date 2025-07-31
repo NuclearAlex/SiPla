@@ -28,7 +28,7 @@ public class QuestionPgService implements TableDataService {
                     result.add("\nВопрос: " + question.getText());
                     result.add("\nОтвет: " + question.getAnswer());
                     result.add(StringUtils.isEmpty(question.getAdditionalAnswer())
-                                    ? "\nЗачёт: точный ответ"
+                                    ? "\nЗачёт: Точный ответ"
                                     : "\nЗачёт: " + question.getAdditionalAnswer());
                     result.add("\nИсточник: " + question.getSource() + "\n");
                 });

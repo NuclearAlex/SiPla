@@ -4,11 +4,8 @@ import by.homiel.shutov.sipla_web.dto.data.DownloadDataRequestDto;
 import by.homiel.shutov.sipla_web.repository.util.FileDataService;
 import by.homiel.shutov.sipla_web.service.download.BuildFileService;
 import by.homiel.shutov.sipla_web.service.metadata.MetadataExtractor;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.Document;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -18,13 +15,15 @@ import java.util.Map;
 import java.util.Objects;
 
 import static by.homiel.shutov.sipla_web.repository.util.FileType.CSV;
+import static by.homiel.shutov.sipla_web.utils.Constants.INVALID_DATABASE;
+import static by.homiel.shutov.sipla_web.utils.Constants.MONGO_COLLECTION;
+import static by.homiel.shutov.sipla_web.utils.Constants.NULL;
 
 
 @Slf4j
 @Service
 @AllArgsConstructor
 public class BuildFileCsvFormatService implements BuildFileService {
-    public static final String NULL = "null";
 
     private final MetadataExtractor metadataExtractor;
     private final FileDataService fileDataService;
@@ -42,6 +41,10 @@ public class BuildFileCsvFormatService implements BuildFileService {
                 .getBytes());
 
         try (outputStream) {
+            if ((!downloadDataRequestDto.postgre() && !downloadDataRequestDto.mongo())) {
+                throw new IllegalArgumentException(INVALID_DATABASE);
+            }
+
             if (downloadDataRequestDto.postgre()) {
                 Map<String, List<String>> allTables = metadataExtractor.getMetaDataPg();
                 allTables.forEach((tableName, fields) ->
@@ -50,29 +53,16 @@ public class BuildFileCsvFormatService implements BuildFileService {
             }
 
             if (downloadDataRequestDto.postgre() && downloadDataRequestDto.mongo()) {
-                outputStream.write("//////////////////////////////////////////////////////////////////////\n".getBytes());
-                outputStream.write(("""
-                        \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-                        \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-                        """).getBytes());
+                outputStream.write("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n"
+                        .getBytes());
             }
 
             if (downloadDataRequestDto.mongo()) {
-                MongoCollection<Document> metaDataMongo = metadataExtractor.getMetaDataMongo();
-                FindIterable<Document> documents = metaDataMongo.find();
-
-                for (Document document : documents) {
-                    if (!Objects.isNull(document)) {
-                        // write data
-                        //TODO: привести в удобочитаемый вид - отработать с монгосервисом
-                        outputStream.write(Objects.requireNonNullElse(document.toJson(), NULL).getBytes());
-                        outputStream.write("\n".getBytes());
-                    }
-                }
+                List<String> allData = fileDataService.getFileData(MONGO_COLLECTION);
+                // write table data
+                writeDataToOutputStream(outputStream, metadataExtractor, allData.size(), allData);
             }
         }
-
         return outputStream;
     }
 
@@ -93,7 +83,11 @@ public class BuildFileCsvFormatService implements BuildFileService {
             }
             return;
         }
+        writeDataToOutputStream(outputStream, metadataExtractor, fieldsCount, allData);
+    }
 
+    private static void writeDataToOutputStream(ByteArrayOutputStream outputStream, MetadataExtractor metadataExtractor,
+                                                int fieldsCount, List<String> allData) {
         int resultSize = allData.size();
         int checkSize = allData.size() % fieldsCount;
         if (checkSize != 0) {
