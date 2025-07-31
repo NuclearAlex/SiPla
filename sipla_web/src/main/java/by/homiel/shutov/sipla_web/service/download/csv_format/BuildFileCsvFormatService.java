@@ -39,11 +39,9 @@ public class BuildFileCsvFormatService implements BuildFileService {
                 .getBytes());
 
         try (outputStream) {
-            if (downloadDataRequestDto.mongo()) {
-                List<String> allData = fileDataService.getFileData(MONGO_COLLECTION);
-                // write table data
-                writeDataToOutputStream(outputStream, metadataExtractor, allData.size(), allData);
-            }
+            List<String> allData = fileDataService.getFileData(MONGO_COLLECTION);
+            // write table data
+            writeDataToOutputStream(outputStream, metadataExtractor, allData.size(), allData);
         }
         return outputStream;
     }
