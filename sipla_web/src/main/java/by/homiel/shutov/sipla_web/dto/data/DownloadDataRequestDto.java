@@ -1,6 +1,6 @@
 package by.homiel.shutov.sipla_web.dto.data;
 
-import by.homiel.shutov.sipla_web.repository.util.FileType;
+import by.homiel.shutov.sipla_web.utils.FileType;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * DTO для запроса выгрузки данных из БД в требуемом формате
  */
 @Builder
-public record DownloadDataRequestDto(String fileName, FileType fileType, boolean mongo, boolean postgre) {
+public record DownloadDataRequestDto(String fileName, FileType fileType) {
     public String getFileName() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

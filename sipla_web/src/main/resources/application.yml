@@ -19,11 +19,6 @@ spring:
       password: secret
       database: siplatdb
       authentication-database: admin
-  datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/siplatdb
-    username: user
-    password: pass
-    driver-class-name: org.postgresql.Driver
   main:
     allow-bean-definition-overriding: true
   servlet:

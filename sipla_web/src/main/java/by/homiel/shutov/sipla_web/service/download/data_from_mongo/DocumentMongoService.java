@@ -1,8 +1,8 @@
 package by.homiel.shutov.sipla_web.service.download.data_from_mongo;
 
 import by.homiel.shutov.sipla_web.repository.mongo.DocumentMongoRepository;
-import by.homiel.shutov.sipla_web.repository.util.Table;
-import by.homiel.shutov.sipla_web.repository.util.TableDataService;
+import by.homiel.shutov.sipla_web.utils.Table;
+import by.homiel.shutov.sipla_web.utils.TableDataService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
