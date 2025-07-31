@@ -20,7 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Setter
 @Table(name = "rounds_pg")
-public class RoundPgPgEntity extends BasePgEntity {
+public class RoundPgEntity extends BasePgEntity {
 
     @Column(name = "round_name")
     private String nameOfRound;
@@ -29,14 +29,14 @@ public class RoundPgPgEntity extends BasePgEntity {
     private int timeToRound;
 
     @OneToMany(mappedBy = "rounds", orphanRemoval = true)
-    private List<TopicPgPgEntity> topics = new ArrayList<>();
+    private List<TopicPgEntity> topics = new ArrayList<>();
 
     @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof RoundPgPgEntity roundPgEntity)) {
+        if (!(object instanceof RoundPgEntity roundPgEntity)) {
             return false;
         }
         return Objects.equals(getId(), roundPgEntity.getId());

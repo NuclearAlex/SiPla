@@ -2,7 +2,6 @@ create table if not exists questions_pg
 (
     id                bigint  not null primary key,
     topics_id         bigint  not null constraint topics_id_fk references topics_pg,
-    answer_time       int not null,
     nominal           int not null,
     text              varchar not null,
     answer            varchar not null,

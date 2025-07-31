@@ -23,7 +23,6 @@ public class QuestionPgService implements TableDataService {
                 .forEach(question -> {
                     result.add("Раунд: " + question.getTopics().getRounds().getNameOfRound());
                     result.add("\nТема: " + question.getTopics().getTopicName());
-                    result.add("\nВремя для ответа на вопрос: " + question.getAnswerTime() + " секунд");
                     result.add("\nНоминал: " + question.getNominal() + " очков");
                     result.add("\nВопрос: " + question.getText());
                     result.add("\nОтвет: " + question.getAnswer());

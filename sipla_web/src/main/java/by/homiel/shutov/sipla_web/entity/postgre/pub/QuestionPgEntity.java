@@ -6,8 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +15,6 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,31 +22,38 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
-@Table(name = "topics_pg")
-public class TopicPgPgEntity extends BasePgEntity {
+@Table(name = "questions_pg")
+public class QuestionPgEntity extends BasePgEntity {
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rounds_id")
+    @JoinColumn(name = "topics_id")
     @Cascade(CascadeType.MERGE)
-    private RoundPgPgEntity rounds;
+    private TopicPgEntity topics;
 
-    @Column(name = "topic_name")
-    private String topicName;
+    @NotNull
+    private int nominal;
 
-    @OneToMany(mappedBy = "topics", orphanRemoval = true)
-    private List<QuestionPgPgEntity> questions = new ArrayList<>();
+    private String text;
+
+    private String answer;
+
+    @Column(name = "additional_answer")
+    private String additionalAnswer;
+
+    private String source;
 
 
     @Override
     public boolean equals(Object object) {
+
         if (this == object) {
             return true;
         }
-        if (!(object instanceof TopicPgPgEntity topicPgEntity)) {
+        if (!(object instanceof QuestionPgEntity questionEntity)) {
             return false;
         }
-        return Objects.equals(getId(), topicPgEntity.getId());
+        return Objects.equals(getId(), questionEntity.getId());
     }
 
     @Override
