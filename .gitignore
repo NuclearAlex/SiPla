@@ -1,0 +1,11 @@
+.idea
+console_app/target
+domain/target
+sipla_web/target
+sipla_web/out
+
+*.iml
+/sipla_web/.gitattributes
+/sipla_web/.mvn/wrapper/maven-wrapper.properties
+/sipla_web/mvnw
+/sipla_web/mvnw.cmd
