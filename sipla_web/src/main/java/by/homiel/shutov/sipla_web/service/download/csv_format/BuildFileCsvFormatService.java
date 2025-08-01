@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.DB_DIVIDER;
+import static by.homiel.shutov.sipla_web.utils.Constants.LABEL;
+import static by.homiel.shutov.sipla_web.utils.Constants.NEXT_LINE;
 import static by.homiel.shutov.sipla_web.utils.FileType.CSV;
 import static by.homiel.shutov.sipla_web.utils.Constants.INVALID_DATABASE;
 import static by.homiel.shutov.sipla_web.utils.Constants.MONGO_COLLECTION;
@@ -31,14 +34,7 @@ public class BuildFileCsvFormatService implements BuildFileService {
     @Override
     public ByteArrayOutputStream buildFile(DownloadDataRequestDto downloadDataRequestDto) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        outputStream.write(""" 
-                *****************************************************************
-                Создатели платформы: NuclearAlex и Shavadre. Все права защищены ©
-                *****************************************************************
-                
-                """
-                .getBytes());
+        outputStream.write(LABEL.getBytes());
 
         try (outputStream) {
             if ((!downloadDataRequestDto.postgre() && !downloadDataRequestDto.mongo())) {
@@ -53,8 +49,7 @@ public class BuildFileCsvFormatService implements BuildFileService {
             }
 
             if (downloadDataRequestDto.postgre() && downloadDataRequestDto.mongo()) {
-                outputStream.write("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n"
-                        .getBytes());
+                outputStream.write(DB_DIVIDER.getBytes());
             }
 
             if (downloadDataRequestDto.mongo()) {
@@ -77,7 +72,7 @@ public class BuildFileCsvFormatService implements BuildFileService {
         List<String> allData = fileDataService.getFileData(tableName);
         if (allData.isEmpty()) {
             try {
-                outputStream.write("\n".getBytes());
+                outputStream.write(NEXT_LINE.getBytes());
             } catch (IOException e) {
                 log.debug(e.getLocalizedMessage());
             }
@@ -101,7 +96,7 @@ public class BuildFileCsvFormatService implements BuildFileService {
                     outputStream.write(Objects.requireNonNullElse(data, NULL).getBytes());
                     outputStream.write(j != fieldsCount - 1
                             ? metadataExtractor.getSeparator().getBytes()
-                            : "\n".getBytes());
+                            : NEXT_LINE.getBytes());
                 }
             }
         } catch (IOException e) {

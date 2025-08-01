@@ -7,12 +7,14 @@ import by.homiel.shutov.sipla_web.dto.data.UploadDataResponseDto;
 import by.homiel.shutov.sipla_web.service.WorkService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.INVALID_DOC_NAME;
 import static by.homiel.shutov.sipla_web.utils.Constants.INVALID_FILE;
 
 @RestController
@@ -37,7 +40,6 @@ public class WorkController implements WorkControllerDocumentation {
     public ResponseEntity<Resource> downloadData(@RequestBody DownloadDataRequestDto downloadDataRequestDto) throws IOException {
 
         DownloadDataResponseDto dataResponseDto = workService.download(downloadDataRequestDto);
-
         ByteArrayResource resource = new ByteArrayResource(dataResponseDto.file().toByteArray());
 
         return ResponseEntity.ok()
@@ -63,5 +65,15 @@ public class WorkController implements WorkControllerDocumentation {
         }
 
         return ResponseEntity.ok(workService.upload(file));
+    }
+
+    @Override
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteDocument(String docName) {
+
+        if (StringUtils.isEmpty(docName)) {
+            throw new IllegalArgumentException(INVALID_DOC_NAME);
+        }
+        return ResponseEntity.ok(workService.deleteDocument(docName));
     }
 }

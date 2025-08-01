@@ -12,10 +12,10 @@ import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 @Service
-public class FileTypeBuildService {
+public class FileDownloadService {
     private final Map<String, BuildFileService> typeFileMap;
 
-    public FileTypeBuildService(List<BuildFileService> repos) {
+    public FileDownloadService(List<BuildFileService> repos) {
         this.typeFileMap = repos.stream().collect(toMap(BuildFileService::getType, identity()));
     }
 

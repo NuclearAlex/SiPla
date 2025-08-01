@@ -4,8 +4,15 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class Constants {
+    public static final String LABEL = """ 
+                *****************************************************************
+                Создатели платформы: NuclearAlex и Shavadre. Все права защищены ©
+                *****************************************************************
+                
+                """;
     public static final String TITLE = "\"Si Platform\" by Nuclearalex & Shavadre";
-    public static final String DESCRIPTION = "Платформа для загрузки и скачивания пакетов и тем своей игры. Все права защищены ©";
+    public static final String DESCRIPTION =
+            "Платформа для загрузки и скачивания пакетов и тем своей игры. Все права защищены ©";
 
     public static final String POSTGRES_PUBLIC_SCHEMA = "public";
     public static final String POSTGRES_TABLE_NAME = "TABLE_NAME";
@@ -20,6 +27,9 @@ public class Constants {
 
     public static final String INVALID_FILE = "You must choose any file!";
     public static final String INVALID_DATABASE = "You must choose any database!";
+    public static final String INVALID_DOC_NAME = "You must input correct document name!";
 
     public static final String NULL = "null";
+    public static final String DB_DIVIDER = "|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\n";
+    public static final String NEXT_LINE = "\n";
 }

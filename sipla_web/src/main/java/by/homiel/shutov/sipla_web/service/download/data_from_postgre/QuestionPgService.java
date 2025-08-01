@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.homiel.shutov.sipla_web.utils.Constants.NEXT_LINE;
+
 @Service
 @AllArgsConstructor
 public class QuestionPgService implements TableDataService {
@@ -29,7 +31,7 @@ public class QuestionPgService implements TableDataService {
                     result.add(StringUtils.isEmpty(question.getAdditionalAnswer())
                                     ? "\nЗачёт: Точный ответ"
                                     : "\nЗачёт: " + question.getAdditionalAnswer());
-                    result.add("\nИсточник: " + question.getSource() + "\n");
+                    result.add("\nИсточник: " + question.getSource() + NEXT_LINE);
                 });
         return result;
     }

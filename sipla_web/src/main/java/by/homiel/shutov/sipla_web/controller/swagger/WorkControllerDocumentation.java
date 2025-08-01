@@ -69,4 +69,30 @@ public interface WorkControllerDocumentation {
             )
     })
     ResponseEntity<UploadDataResponseDto> uploadData(MultipartFile file);
+
+    @Operation(summary = "Delete required document", description = "Access: all users")
+    @RequestBody(description = "You need to input document name")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "The document successfully deleted",
+                    content = {
+                            @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = UploadDataResponseDto.class), examples = @ExampleObject(value = "Success. The document deleted")
+                            )
+                    }
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Request body validation error",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "The token wan not provided or is not valid",
+                    content = @Content
+            )
+    })
+    ResponseEntity<String> deleteDocument(String docName);
 }

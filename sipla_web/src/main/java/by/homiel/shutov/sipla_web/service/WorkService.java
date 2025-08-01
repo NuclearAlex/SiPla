@@ -12,4 +12,6 @@ public interface WorkService {
     DownloadDataResponseDto download(DownloadDataRequestDto downloadDataRequestDto) throws IOException;
 
     UploadDataResponseDto upload(MultipartFile file);
+
+    String deleteDocument(String docName);
 }
