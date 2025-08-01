@@ -1,7 +1,7 @@
 package by.homiel.shutov.sipla_web.service.metadata;
 
 import by.homiel.shutov.sipla_web.config.ConfigDb;
-import by.homiel.shutov.sipla_web.repository.util.Table;
+import by.homiel.shutov.sipla_web.utils.Table;
 import com.mongodb.client.MongoCollection;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

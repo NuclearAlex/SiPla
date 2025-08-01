@@ -2,7 +2,6 @@ package by.homiel.shutov.sipla_web.service.impl;
 
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataRequestDto;
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataResponseDto;
-import by.homiel.shutov.sipla_web.dto.data.UploadDataRequestDto;
 import by.homiel.shutov.sipla_web.dto.data.UploadDataResponseDto;
 import by.homiel.shutov.sipla_web.service.WorkService;
 import by.homiel.shutov.sipla_web.service.download.FileTypeBuildService;
@@ -16,8 +15,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -29,8 +26,8 @@ public class WorkServiceImpl implements WorkService {
     public DownloadDataResponseDto download(DownloadDataRequestDto downloadDataRequestDto) throws IOException {
 
         // В будущем здесь нужен внешний сервис для хранения файлов (minio, dropbox, ...)
-        ByteArrayOutputStream bytes =
-                fileTypeBuildService.getFileType(downloadDataRequestDto, downloadDataRequestDto.fileType().getType());
+        ByteArrayOutputStream bytes = fileTypeBuildService.getFileType(
+                downloadDataRequestDto, downloadDataRequestDto.fileType().getType());
 
         return DownloadDataResponseDto
                 .builder()
@@ -39,24 +36,19 @@ public class WorkServiceImpl implements WorkService {
     }
 
     @Override
-    public UploadDataResponseDto upload(UploadDataRequestDto dto, MultipartFile file) {
-
+    public UploadDataResponseDto upload(MultipartFile file) {
         try {
             String dataFromFile = convertDataFromFileToString(file.getInputStream());
 
-            // таблица в загрузку. Парсим название таблицы
-            List<String> tableNames = getTableNames(dataFromFile);
-
             // нужно перенаправить по названию таблицы в маппер и смапить в сущности для последующего сохранения
-            fileTypeUploadService.writeToDatabase(tableNames.toString());
-
+            String result = fileTypeUploadService.writeToDatabase(dataFromFile);
         } catch (IOException ex) {
             ex.getLocalizedMessage();
         }
 
         return UploadDataResponseDto
                 .builder()
-                .message("Success. Upload data from " + file.getOriginalFilename())
+                .message("Success. Upload data from file: " + file.getOriginalFilename())
                 .build();
     }
 
@@ -69,21 +61,5 @@ public class WorkServiceImpl implements WorkService {
         }
         bufferedReader.close();
         return stringBuilder.toString();
-    }
-
-    private static List<String> getTableNames(String dataFromFile) {
-        return Arrays
-                .stream(dataFromFile
-                        .split("\n\n"))
-                .filter(table -> !table.startsWith(" "))
-                .toList()
-                .stream()
-                .map(column -> Arrays
-                        .stream(column
-                                .split("\n"))
-                        .findFirst()
-                        .orElse(""))
-                .filter(table -> !table.isEmpty())
-                .toList();
     }
 }

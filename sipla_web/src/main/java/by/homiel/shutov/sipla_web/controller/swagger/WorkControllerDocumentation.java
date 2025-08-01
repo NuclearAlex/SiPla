@@ -2,7 +2,6 @@ package by.homiel.shutov.sipla_web.controller.swagger;
 
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataRequestDto;
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataResponseDto;
-import by.homiel.shutov.sipla_web.dto.data.UploadDataRequestDto;
 import by.homiel.shutov.sipla_web.dto.data.UploadDataResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -69,5 +68,5 @@ public interface WorkControllerDocumentation {
                     content = @Content
             )
     })
-    ResponseEntity<UploadDataResponseDto> uploadData(UploadDataRequestDto dto, MultipartFile file);
+    ResponseEntity<UploadDataResponseDto> uploadData(MultipartFile file);
 }

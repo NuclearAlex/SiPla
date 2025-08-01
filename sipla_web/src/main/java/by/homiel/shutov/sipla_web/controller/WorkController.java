@@ -3,7 +3,6 @@ package by.homiel.shutov.sipla_web.controller;
 import by.homiel.shutov.sipla_web.controller.swagger.WorkControllerDocumentation;
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataRequestDto;
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataResponseDto;
-import by.homiel.shutov.sipla_web.dto.data.UploadDataRequestDto;
 import by.homiel.shutov.sipla_web.dto.data.UploadDataResponseDto;
 import by.homiel.shutov.sipla_web.service.WorkService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,12 +56,12 @@ public class WorkController implements WorkControllerDocumentation {
     @PostMapping(value ="/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UploadDataResponseDto> uploadData(UploadDataRequestDto dto, @RequestPart("File") MultipartFile file) {
+    public ResponseEntity<UploadDataResponseDto> uploadData(@RequestPart("File") MultipartFile file) {
 
         if (file == null) {
             throw new IllegalArgumentException(INVALID_FILE);
         }
 
-        return ResponseEntity.ok(workService.upload(dto, file));
+        return ResponseEntity.ok(workService.upload(file));
     }
 }

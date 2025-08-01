@@ -1,6 +1,6 @@
 package by.homiel.shutov.sipla_web.dto.data;
 
-import by.homiel.shutov.sipla_web.repository.util.FileType;
+import by.homiel.shutov.sipla_web.utils.FileType;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

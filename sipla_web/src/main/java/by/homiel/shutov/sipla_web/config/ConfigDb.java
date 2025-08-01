@@ -52,7 +52,11 @@ public class ConfigDb {
     @Bean
     @ConfigurationProperties(prefix = "spring.data.mongodb")
     public MongoClient getMongodbClient() {
-        String connectionString = String.format("%s%s:%s@%s", MONGO_PREFIX, mongoUser, mongoPassword, mongoUrl);
+        String connectionString = String.format("%s%s:%s@%s",
+                MONGO_PREFIX,
+                mongoUser,
+                mongoPassword,
+                mongoUrl);
         return MongoClients.create(connectionString);
     }
 }

@@ -1,7 +1,7 @@
 package by.homiel.shutov.sipla_web.service.download.csv_format;
 
 import by.homiel.shutov.sipla_web.dto.data.DownloadDataRequestDto;
-import by.homiel.shutov.sipla_web.repository.util.FileDataService;
+import by.homiel.shutov.sipla_web.utils.FileDataService;
 import by.homiel.shutov.sipla_web.service.download.BuildFileService;
 import by.homiel.shutov.sipla_web.service.metadata.MetadataExtractor;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import static by.homiel.shutov.sipla_web.repository.util.FileType.CSV;
+import static by.homiel.shutov.sipla_web.utils.FileType.CSV;
 import static by.homiel.shutov.sipla_web.utils.Constants.INVALID_DATABASE;
 import static by.homiel.shutov.sipla_web.utils.Constants.MONGO_COLLECTION;
 import static by.homiel.shutov.sipla_web.utils.Constants.NULL;

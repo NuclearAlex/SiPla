@@ -1,4 +1,4 @@
-package by.homiel.shutov.sipla_web.repository.util;
+package by.homiel.shutov.sipla_web.utils;
 
 import org.springframework.stereotype.Service;
 

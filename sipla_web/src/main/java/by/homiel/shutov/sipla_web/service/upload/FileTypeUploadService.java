@@ -7,6 +7,7 @@ public class FileTypeUploadService {
 
     public String writeToDatabase(String tableName) {
         // TODO: реализация
+
         return tableName;
     }
 }
