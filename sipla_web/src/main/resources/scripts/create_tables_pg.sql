@@ -26,3 +26,11 @@ create table if not exists rounds_pg
     round_name varchar not null,
     round_time integer not null
 );
+
+
+create table if not exists doc_names_pg
+(
+    id       bigint  not null primary key,
+    doc_name varchar not null,
+    topics_id bigint  not null constraint topics_id_pk references topics_pg
+);

@@ -18,8 +18,8 @@ import java.io.IOException;
 
 public interface WorkControllerDocumentation {
 
-    @Operation(summary = "Download free data (topics, packages) from platform", description = "Access: all users")
-    @RequestBody(description = "You'll get data from SiPla")
+    @Operation(summary = "Download free documents from platform", description = "Access: all users")
+    @RequestBody(description = "You'll get document from SiPla")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -44,7 +44,7 @@ public interface WorkControllerDocumentation {
     })
     ResponseEntity<Resource> downloadData(DownloadDataRequestDto downloadDataRequestDto) throws IOException;
 
-    @Operation(summary = "Upload data to platform", description = "Access: all users")
+    @Operation(summary = "Upload documents to platform", description = "Access: all users")
     @RequestBody(description = "You must use files to text format")
     @ApiResponses(value = {
             @ApiResponse(
@@ -53,7 +53,7 @@ public interface WorkControllerDocumentation {
                     content = {
                             @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = UploadDataResponseDto.class), examples = @ExampleObject(value = "Success. Uploaded data from file")
+                                    schema = @Schema(implementation = UploadDataResponseDto.class), examples = @ExampleObject(value = "Success. Document was uploaded")
                             )
                     }
             ),

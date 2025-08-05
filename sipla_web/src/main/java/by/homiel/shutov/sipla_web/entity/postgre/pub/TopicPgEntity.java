@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,12 @@ public class TopicPgEntity extends BasePgEntity {
     @JoinColumn(name = "rounds_id")
     @Cascade(CascadeType.MERGE)
     private RoundPgEntity rounds;
+
+    @Setter
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "docname_id")
+    @Cascade(CascadeType.MERGE)
+    private DocNamePgEntity docName;
 
     @Column(name = "topic_name")
     private String topicName;
