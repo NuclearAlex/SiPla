@@ -1,0 +1,31 @@
+type Query {
+    questions: [QuestionPgEntity]
+}
+
+type QuestionPgEntity {
+    id: ID
+    nominal: Int
+    text: String
+    answer: String
+    additionalAnswer: String
+    source: String
+    topics: TopicPgEntity
+}
+
+type TopicPgEntity {
+    id: ID
+    rounds: RoundPgEntity
+    topicName: String
+    docName: DocNamePgEntity
+}
+
+type RoundPgEntity {
+    id: ID
+    nameOfRound: String
+    timeToRound: Int
+}
+
+type DocNamePgEntity {
+    id: ID
+    docName: String
+}

@@ -21,10 +21,6 @@ public class DocNamePgEntity extends BasePgEntity {
     @Column(name = "doc_name")
     private String docName;
 
-    @Column(name = "topics_id")
-    @OneToOne(mappedBy = "docnames_id", orphanRemoval = true)
-    private TopicPgEntity topicsId;
-
     @OneToOne(mappedBy = "docName", orphanRemoval = true)
     private TopicPgEntity documentName;
 }

@@ -30,6 +30,9 @@ spring:
     multipart:
       max-file-size: -1
       max-request-size: -1
+  graphql:                  # http://localhost:8055/data/graphiql - graphQL url
+    graphiql:
+      enabled: true
 
 #==============================================================================
 #                                   Swagger
