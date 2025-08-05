@@ -22,5 +22,5 @@ public class DocNamePgEntity extends BasePgEntity {
     private String docName;
 
     @OneToOne(mappedBy = "docName", orphanRemoval = true)
-    private TopicPgEntity documentName;
+    private TopicPgEntity docTopics;
 }

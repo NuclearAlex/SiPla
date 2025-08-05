@@ -15,7 +15,8 @@ create table if not exists topics_pg
 (
     id         bigint  not null primary key,
     rounds_id  bigint  not null constraint rounds_id_fk references rounds_pg,
-    topic_name varchar not null
+    topic_name varchar not null,
+    docname_id bigint  not null constraint docname_id_fk references doc_names_pg
 );
 
 
@@ -28,9 +29,10 @@ create table if not exists rounds_pg
 );
 
 
+
 create table if not exists doc_names_pg
 (
-    id       bigint  not null primary key,
-    doc_name varchar not null,
-    topics_id bigint  not null constraint topics_id_pk references topics_pg
+    id        bigint  not null primary key,
+    doc_name  varchar not null,
+    topics_id bigint  not null
 );
